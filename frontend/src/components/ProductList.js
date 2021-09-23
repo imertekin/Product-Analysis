@@ -2,13 +2,15 @@ import React from 'react'
   
   const ProductList =(props)=> {
     return (
+    
       <div className="flex flex-col">
+        
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8" >
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
             
               <table className="max-w-full divide-y divide-gray-200 " >
-                <thead className="bg-gray-50">
+                <thead className="bg-yellow-100">
                   <tr>
                     <th
                       scope="col"
@@ -63,7 +65,7 @@ import React from 'react'
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-yellow-400 divide-y divide-yellow-300">
                   {props.products.map((product) => (
                     <tr key={product.index}>
                       <td className="px-6 py-4 whitespace-wrap">
@@ -98,7 +100,7 @@ import React from 'react'
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{Math.round(product.ratingscore*100)/100}</td>
                       <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{product.totalcount}</td>
-                      <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{new Date(product.addedtime).toLocaleDateString('en-US')}</td>
+                      <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{product.addedtime}</td>
                       <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                         <a href={"https://www.trendyol.com".concat(product.url)}  target="_blank" rel="noreferrer noopener" className="text-indigo-600 hover:text-indigo-900">
                           Link

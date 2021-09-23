@@ -3,6 +3,20 @@ import SearchBar from "./components/SearchBar";
 import React, { Component } from 'react'
 import axios from "axios"
 import Pagination from "./components/Pagination";
+import LandingPage from "./components/LandingPage";
+
+
+
+
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import Nav from "./components/Nav";
+
+
 
 
 
@@ -28,7 +42,7 @@ export default class App extends Component {
     this.setState({Products:res.data.results})
     this.setState({next:res.data.next})
     this.setState({previous:res.data.previous})
-    
+   
    
  }
  
@@ -67,6 +81,7 @@ export default class App extends Component {
 
   }
 }
+  
 
 
 
@@ -83,29 +98,39 @@ export default class App extends Component {
   }
 
 
-
-
+  
  
     
-
-
 
   render() {
     
    
     return (
       
-      <div>
+      <Router>
+      <Nav />
+      
+        <Switch>
         
+        <Route exact path="/">
+          
+        <LandingPage />
+        </Route>
+        
+        <Route path="/product">
         <SearchBar  search={this.searchbar}  />
         <ProductList
          products={this.state.Products} />
-        <div className="flex justify-center py-4">
-        <Pagination next={this.next} previous={this.previous} />
+          <div className="flex justify-center py-4">
+        <Pagination next={this.next} previous={this.previous}  />
         </div>
+         
+        </Route>
+       
         
-        
-      </div>
+      </Switch>
+      
+      </Router>
     )
   }
 }

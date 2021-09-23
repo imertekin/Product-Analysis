@@ -1,4 +1,6 @@
 from django.db import models
+from django.template.defaultfilters import slugify
+
 
 # Create your models here.
 
@@ -22,6 +24,12 @@ class Product(models.Model):
     freecargo = models.BooleanField(db_column='freeCargo', blank=True, null=True)  
 # Field name made lowercase.
     addedtime = models.DateTimeField(db_column='addedTime', blank=True, null=True)  # Field name made lowercase.
+    slug=models.SlugField(blank=False,null=False)
+
+
+    def save(self, *args, **kwargs):
+            self.slug = slugify(self.categoryname)
+            super(Product, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.P_id)

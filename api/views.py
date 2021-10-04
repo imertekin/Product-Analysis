@@ -14,34 +14,15 @@ from api.serializers import ProductSerializer, UserSerializer
 
 
 
-class ProductListView(generics.ListCreateAPIView):
+
+# Unique Product List View 
+
+class ProductListView(generics.ListAPIView):
     queryset=Product.objects.all()
     serializer_class=ProductSerializer
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['name','categoryname','brand']
-
-    
-
-
-        
-
-class testDetail(generics.ListAPIView):
-    queryset=Product.objects.all()
-    serializer_class=ProductSerializer
-    
-    def get_queryset(self):
-        queryset=self.queryset
-        
-        queryset=queryset.filter(P_id=self.kwargs['P_id'])
-    
-        return queryset
-
-
-class test(generics.ListAPIView):
-    queryset=Product.objects.all()
-    serializer_class=ProductSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['=P_id']
+    ordering_fields = '__all__'
 
 
     def get_queryset(self):
@@ -51,10 +32,29 @@ class test(generics.ListAPIView):
 
 
 
+# Single Product list for all time.
+
+class ProductDetailView(generics.ListAPIView):
+    queryset=Product.objects.all()
+    serializer_class=ProductSerializer
+
+    
+    def get_queryset(self):
+        queryset=self.queryset
         
+        queryset=queryset.filter(P_id=self.kwargs['P_id'])
+    
+        return queryset
+
+
+
+# Category Slug View
 class catagory(generics.ListAPIView):
     queryset=Product.objects.all()
     serializer_class=ProductSerializer
+    filter_backends = [filters.SearchFilter,filters.OrderingFilter]
+    search_fields = ['name','categoryname','brand']
+    ordering_fields = '__all__'
     def get_queryset(self):
         queryset=self.queryset
         
@@ -62,9 +62,21 @@ class catagory(generics.ListAPIView):
         
 
         return queryset
+
+
+
+#Listed all product (with Duplicated)
+class ProductListAdminView(generics.ListCreateAPIView):
+    queryset=Product.objects.all()
+    serializer_class=ProductSerializer
+    filter_backends = [filters.SearchFilter,filters.OrderingFilter]
+    search_fields = ['name','categoryname','brand']
+    ordering_fields = '__all__'
+
     
 
-class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+# CRUD Operations
+class ProductDetailAdminView(generics.RetrieveUpdateDestroyAPIView):
     queryset=Product.objects.all()
     serializer_class=ProductSerializer
 

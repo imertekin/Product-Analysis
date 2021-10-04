@@ -1,6 +1,13 @@
 import React from 'react'
+
+
+
+
   
-  const ProductList =(props)=> {
+function ProductList(props) {
+
+
+
     return (
     
       <div className="flex flex-col">
@@ -26,9 +33,10 @@ import React from 'react'
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                      // className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
                     >
-                      Orginal Price
+                      <button  className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase" >Orginal Price</button>
+                      
                     </th>
                     <th
                       scope="col"
@@ -67,6 +75,7 @@ import React from 'react'
                 </thead>
                 <tbody className="bg-yellow-400 divide-y divide-yellow-300">
                   {props.products.map((product) => (
+                    
                     <tr key={product.index}>
                       <td className="px-6 py-4 whitespace-wrap">
                         <div className="flex items-center">

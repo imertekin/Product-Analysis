@@ -38,7 +38,6 @@ export default class App extends Component {
   async componentDidMount(){
 
     const res = await axios.get("http://127.0.0.1:8000/api/product/")
-    
     this.setState({Products:res.data.results})
     this.setState({next:res.data.next})
     this.setState({previous:res.data.previous})
@@ -98,13 +97,11 @@ export default class App extends Component {
   }
 
 
-  
  
     
 
   render() {
     
-   
     return (
       
       <Router>

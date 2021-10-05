@@ -1,8 +1,8 @@
 import ProductList from "./components/ProductList";
 import SearchBar from "./components/SearchBar";
-import React, { Component } from 'react'
+import React, { useEffect,useState } from 'react'
 import axios from "axios"
-import Pagination from "./components/Pagination";
+// import Pagination from "./components/Pagination";
 import LandingPage from "./components/LandingPage";
 
 
@@ -22,85 +22,41 @@ import Nav from "./components/Nav";
 
 
 
-export default class App extends Component {
-  state={
-    Products : [],
-      searchQuery:"",
-      offset:0,
-      next:"",
-      previous:"",
-      
-        
-
-  }
-
-
-  async componentDidMount(){
-
-    const res = await axios.get("http://127.0.0.1:8000/api/product/")
-    this.setState({Products:res.data.results})
-    this.setState({next:res.data.next})
-    this.setState({previous:res.data.previous})
-   
-   
- }
+export default function App()  {
  
-  next=async()=>{
-    if(this.state.next!==null){
-    const res = await axios.get(this.state.next)
-    this.setState({next:res.data.next})
-    this.setState({previous:res.data.previous})
-    console.log(this.state.next)
-    this.setState({Products:res.data.results})
+
+  const [Products,setProducts]=useState([]);
+
+  
+
+
+
+  useEffect(() => {
+    const getProduct = async()=>{
+      let res =await axios.get("http://127.0.0.1:8000/api/product/?search= &order=")
+      setProducts(res.data.results)
     }
-    
-  
-   else {console.log("null")
-   
-  
-  
-  } 
-    
-    }
-  
+    getProduct()
     
     
+  }, [])
 
-  previous= async()=>{
-    if(this.state.previous!==null){
-      const res = await axios.get(this.state.previous)
-      this.setState({next:res.data.next})
-      this.setState({previous:res.data.previous})
-      console.log(this.state.previous)
-      this.setState({Products:res.data.results})
-      }
-      
-    
-     else {console.log("null")
-
-  }
-}
-  
-
-
-
-  searchbar=async (e)=>{
+ 
+  const searchbar=async (e)=>{
     e.preventDefault()
     const ip=document.getElementById('test')
     const res = await axios.get("http://127.0.0.1:8000/api/product/?search="+ip.value)
-    this.setState({next:res.data.next})
-    this.setState({previous:res.data.previous})
-    this.setState({Products:res.data.results})
+    setProducts(res.data.results)
     ip.value=""
-    console.log(this.state.next)
+    
     
   }
 
-
+  
  
     
 
-  render() {
+  
     
     return (
       
@@ -115,13 +71,10 @@ export default class App extends Component {
         </Route>
         
         <Route path="/product">
-        <SearchBar  search={this.searchbar}  />
+        <SearchBar  search={searchbar} />
         <ProductList
-         products={this.state.Products} />
-          <div className="flex justify-center py-4">
-        <Pagination next={this.next} previous={this.previous}  />
-        </div>
-         
+         products={Products} />
+          
         </Route>
        
         
@@ -130,5 +83,5 @@ export default class App extends Component {
       </Router>
     )
   }
-}
+
 

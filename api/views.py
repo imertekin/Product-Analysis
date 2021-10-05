@@ -18,7 +18,6 @@ from api.serializers import ProductSerializer, UserSerializer
 # Unique Product List View 
 
 class ProductListView(generics.ListAPIView):
-    queryset=Product.objects.all()
     serializer_class=ProductSerializer
     filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['name','categoryname','brand']
@@ -26,8 +25,8 @@ class ProductListView(generics.ListAPIView):
 
 
     def get_queryset(self):
-        queryset=self.queryset
-        queryset=queryset.order_by('P_id','-addedtime').distinct('P_id')
+        queryset=Product.objects.order_by('P_id','-addedtime').distinct('P_id')
+        queryset=Product.objects.filter(index__in=queryset).order_by('index')
         return queryset
 
 
